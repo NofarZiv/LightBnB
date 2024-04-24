@@ -65,7 +65,7 @@ const addUser = function (user) {
 
 const getAllReservations = function (guest_id, limit = 10) {
   return pool
-    .query(`SELECT reservations.*, properties.*, avg(rating) as average_rating
+    .query(`SELECT reservations.*, properties.*, AVG(rating) as average_rating
     FROM reservations
     JOIN properties ON reservations.property_id = properties.id
     JOIN property_reviews ON properties.id = property_reviews.property_id
@@ -118,7 +118,6 @@ const getAllProperties = function (options, limit = 10) {
   ORDER BY cost_per_night
   LIMIT $${queryParams.length};
   `;
-  console.log(queryString, queryParams);
   return pool.query(queryString, queryParams).then((res) => res.rows);
 };
 
